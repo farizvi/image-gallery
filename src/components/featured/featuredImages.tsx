@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import styled from "styled-components";
 import {
   IconLookup,
@@ -10,29 +10,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarker } from "@fortawesome/free-solid-svg-icons";
 import { Guid } from "guid-typescript";
 import { ICardProps } from "../../app/models/ICardProps";
-import { IImageListProps } from "../../app/models/IImageListProps";
+import useFetch from "../../app/hooks/useFetch";
 
 library.add(faMapMarker);
 const imagesLookup: IconLookup = { prefix: "fas", iconName: "map-marker" };
 const imagesIconDefinition: IconDefinition = findIconDefinition(imagesLookup);
 
 const CardsList = styled.section`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 20px;
-  margin-bottom: 40px;
-  margin-left: 15px;
-
-  @media (max-width: 780px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 500px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const CardsCarousel = styled.section`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 20px;
@@ -67,16 +51,22 @@ const CardText = styled.p`
   margin-left: 15px;
 `;
 
-export const ImageList = (props: IImageListProps) => {
-  const { imageListType, data, isError, isLoading } = props;
+export const FeaturedImages = () => {
+  const imageListUrl = "http://demo3136867.mockable.io/featured";
+  const [doSearch, setDoSearch] = useState(false);
+  const { response, isLoading, isError } = useFetch(imageListUrl, doSearch);
+
+  useEffect(() => {
+    setDoSearch(true);
+  }, []);
 
   const renderCardsList = () =>
     !isLoading &&
     !isError &&
-    data &&
-    data.length > 0 && (
+    response.data &&
+    response.data.length > 0 && (
       <CardsList>
-        {data.map((item: ICardProps) => (
+        {response.data.map((item: ICardProps) => (
           <Card key={Guid.create().toString()}>
             <CardImage src={item.imageUrl} />
             <CardTitle>{item.title}</CardTitle>
@@ -90,26 +80,6 @@ export const ImageList = (props: IImageListProps) => {
       </CardsList>
     );
 
-  const renderCardsCarousel = () =>
-    !isLoading &&
-    !isError &&
-    data &&
-    data.length > 0 && (
-      <CardsCarousel>
-        {data.map((item: ICardProps) => (
-          <Card key={Guid.create().toString()}>
-            <CardImage src={item.imageUrl} />
-            <CardTitle>{item.title}</CardTitle>
-            <CardText>
-              <FontAwesomeIcon icon={imagesIconDefinition} size="1x" />
-              &nbsp;
-              {item.location}
-            </CardText>
-          </Card>
-        ))}
-      </CardsCarousel>
-    );
-
   return (
     <Fragment>
       {isError && <div>Something went wrong ...</div>}
@@ -117,7 +87,7 @@ export const ImageList = (props: IImageListProps) => {
         <div>Loading ...</div>
       ) : (
         <div>
-          {imageListType === "list" ? renderCardsList() : renderCardsCarousel()}
+          { renderCardsList()}
         </div>
       )}
     </Fragment>

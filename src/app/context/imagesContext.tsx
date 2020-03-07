@@ -16,15 +16,17 @@ const ImagesContext = React.createContext<IImagesProvider>({
   handleChange: null
 });
 
+const featuredImagesUrl = "http://demo3136867.mockable.io/carousel";
+
 const ImagesProvider: React.FC = props => {
   const [searchString, setSearchString] = useState("");
 
   const [doSearch, setDoSearch] = useState(false);
   const { response, isLoading, isError } = useFetch(
-    "http://demo3136867.mockable.io/featured",
+    featuredImagesUrl,
     doSearch
   );
-  const [searchResults, setSearchResults] = useState();
+  const [searchResults, setSearchResults] = useState(); 
 
   useEffect(() => {
     setDoSearch(true);
