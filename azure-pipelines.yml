@@ -10,7 +10,7 @@ variables:
   webAppName: 'Image Gallery'
   
   # Environment name
-  environmentName: ''
+  environmentName: 'demo'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
