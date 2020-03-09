@@ -39,7 +39,7 @@ const Card = styled.div`
 
 const CardImage = styled.img`
   width: 100%;
-  height: 100%;
+  height: 200px;
   margin-bottom: 5px;
 `;
 
@@ -49,6 +49,12 @@ const CardTitle = styled.h3`
 
 const CardText = styled.p`
   margin-left: 15px;
+`;
+
+const Loader = styled.div`
+  margin: 0 auto;
+  position: fixed;
+  left: 50%;
 `;
 
 export const FeaturedImages = () => {
@@ -68,7 +74,7 @@ export const FeaturedImages = () => {
       <CardsList>
         {response.data.map((item: ICardProps) => (
           <Card key={Guid.create().toString()}>
-            <CardImage src={item.imageUrl} />
+            <CardImage src={item.img} />
             <CardTitle>{item.title}</CardTitle>
             <CardText>
               <FontAwesomeIcon icon={imagesIconDefinition} size="1x" />
@@ -83,13 +89,7 @@ export const FeaturedImages = () => {
   return (
     <Fragment>
       {isError && <div>Something went wrong ...</div>}
-      {isLoading ? (
-        <div>Loading ...</div>
-      ) : (
-        <div>
-          { renderCardsList()}
-        </div>
-      )}
+      {isLoading ? <Loader>Loading...</Loader> : <div>{renderCardsList()}</div>}
     </Fragment>
   );
 };

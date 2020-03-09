@@ -13,8 +13,8 @@ const ContainerComponent = styled.div`
 
 const Title = styled.div`
   display: flex;
-  margin-left: 15px;
-  margin-top: 10px;
+  margin-left: 20px;
+  margin-top: 20px;
   margin-bottom: 15px;
   font-weight: bold;
   font-size: 14pt;

@@ -16,46 +16,31 @@ library.add(faMapMarker);
 const imagesLookup: IconLookup = { prefix: "fas", iconName: "map-marker" };
 const imagesIconDefinition: IconDefinition = findIconDefinition(imagesLookup);
 
-const CardsList = styled.section`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 20px;
-  margin-bottom: 40px;
-  margin-left: 15px;
-
-  @media (max-width: 780px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 500px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const CardsCarousel = styled.section`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 20px;
-  margin-bottom: 40px;
-  margin-left: 15px;
-
-  @media (max-width: 780px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 500px) {
-    grid-template-columns: 1fr;
-  }
+const CardsCarousel = styled.div`
+  display: flex;
+  margin-left: 20px;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  overflow-x: auto;
 `;
 
 const Card = styled.div`
   background-color: #fff;
   border-radius: 5px;
+  margin-right: 20px;
+  flex-shrink: 0;
+  width: 350px;
+
+  ::before,
+  ::after {
+    content: "";
+  }
 `;
 
 const CardImage = styled.img`
   width: 100%;
-  height: 100%;
+  height: 200px;
   margin-bottom: 5px;
 `;
 
@@ -67,38 +52,24 @@ const CardText = styled.p`
   margin-left: 15px;
 `;
 
-export const ImageList = (props: IImageListProps) => {
-  const { imageListType, data, isError, isLoading } = props;
+const Loader = styled.div`
+  margin: 0 auto;
+  position: fixed;
+  left: 50%;
+`;
 
-  const renderCardsList = () =>
-    !isLoading &&
-    !isError &&
-    data &&
-    data.length > 0 && (
-      <CardsList>
-        {data.map((item: ICardProps) => (
-          <Card key={Guid.create().toString()}>
-            <CardImage src={item.imageUrl} />
-            <CardTitle>{item.title}</CardTitle>
-            <CardText>
-              <FontAwesomeIcon icon={imagesIconDefinition} size="1x" />
-              &nbsp;
-              {item.location}
-            </CardText>
-          </Card>
-        ))}
-      </CardsList>
-    );
+export const ImageList = (props: IImageListProps) => {
+  const { data, isError, isLoading } = props;
 
   const renderCardsCarousel = () =>
     !isLoading &&
     !isError &&
     data &&
     data.length > 0 && (
-      <CardsCarousel>
+      <CardsCarousel aria-label="popular-images">
         {data.map((item: ICardProps) => (
           <Card key={Guid.create().toString()}>
-            <CardImage src={item.imageUrl} />
+            <CardImage src={item.img} />
             <CardTitle>{item.title}</CardTitle>
             <CardText>
               <FontAwesomeIcon icon={imagesIconDefinition} size="1x" />
@@ -114,11 +85,9 @@ export const ImageList = (props: IImageListProps) => {
     <Fragment>
       {isError && <div>Something went wrong ...</div>}
       {isLoading ? (
-        <div>Loading ...</div>
+        <Loader>Loading...</Loader>
       ) : (
-        <div>
-          {imageListType === "list" ? renderCardsList() : renderCardsCarousel()}
-        </div>
+        <div>{renderCardsCarousel()}</div>
       )}
     </Fragment>
   );

@@ -1,5 +1,5 @@
 export interface ICardProps {
-    title: string;
-    location: string;
-    imageUrl: string;
-  }
+  title: string;
+  location: string;
+  img: string;
+}
