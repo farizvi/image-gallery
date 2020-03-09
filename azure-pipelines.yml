@@ -11,10 +11,10 @@ trigger:
 variables:
 
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: 'c9c3b370-1f6e-4259-9d8a-8b089e3839e9'
+  azureSubscription: '12ed7467-e0e8-40d0-9522-e6394b383516'
 
   # Web app name
-  webAppName: ''
+  webAppName: 'Image Gallery'
   
   # Environment name
   environmentName: ''
