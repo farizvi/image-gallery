@@ -4,7 +4,7 @@ trigger:
 variables:
 
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: '/subscriptions/12ed7467-e0e8-40d0-9522-e6394b383516/resourceGroups/image-gallery'
+  azureSubscription: 'subscriptionConnection'
 
   # Web app name
   webAppName: 'Image Gallery'
