@@ -58,7 +58,7 @@ const Loader = styled.div`
 `;
 
 export const FeaturedImages = () => {
-  const imageListUrl = "http://demo3136867.mockable.io/featured";
+  const imageListUrl = "https://demo3136867.mockable.io/featured";
   const [doSearch, setDoSearch] = useState(false);
   const { response, isLoading, isError } = useFetch(imageListUrl, doSearch);
 

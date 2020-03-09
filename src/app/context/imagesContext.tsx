@@ -16,7 +16,7 @@ const ImagesContext = React.createContext<IImagesProvider>({
   handleChange: null
 });
 
-const featuredImagesUrl = "http://demo3136867.mockable.io/carousel";
+const featuredImagesUrl = "https://demo3136867.mockable.io/carousel";
 
 const ImagesProvider: React.FC = props => {
   const [searchString, setSearchString] = useState("");
