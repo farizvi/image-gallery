@@ -1,10 +1,12 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/6170c912-7071-4920-9416-e13ece6781d9/deploy-status)](https://app.netlify.com/sites/image-gallery-6002a6/deploys)
+
 This application is developed for a frontend developer test which has following requirements
 * Display images in carousal and grid layout
 * Images in carousal should be filtered based on user input
 * Filtering of images should be done on client side
 
 ## Demo
-
+https://image-gallery-6002a6.netlify.com/
 
 ## Available Scripts
 
