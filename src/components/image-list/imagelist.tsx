@@ -7,14 +7,16 @@ import {
   library
 } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMapMarker, faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { faMapMarker, faChevronLeft, faChevronRight, faDotCircle } from "@fortawesome/free-solid-svg-icons";
 import { Guid } from "guid-typescript";
 import { ICardProps } from "../../app/models/ICardProps";
 import { IImageListProps } from "../../app/models/IImageListProps";
+import FadeIn from "react-fade-in";
 
 library.add(faMapMarker);
 library.add(faChevronLeft);
 library.add(faChevronRight);
+library.add(faDotCircle);
 
 const imagesLookup: IconLookup = { prefix: "fas", iconName: "map-marker" };
 const imagesIconDefinition: IconDefinition = findIconDefinition(imagesLookup);
@@ -25,18 +27,29 @@ const chevronLeftDefinition: IconDefinition = findIconDefinition(chevronLeftLook
 const chevronRightLookup: IconLookup = { prefix: "fas", iconName: "chevron-right" };
 const chevronRightDefinition: IconDefinition = findIconDefinition(chevronRightLookup);
 
+const dotLookup: IconLookup = { prefix: "fas", iconName: "dot-circle"};
+const dotDefinition: IconDefinition = findIconDefinition(dotLookup);
+
 const CarouselContainer = styled.div`
   display: flex;
 `;
 
 const ChevronLeft = styled.div`
-  margin-top: 100px;
+  margin-top: 10px;
+  margin-right: 5px;
+  float: left;
   cursor: pointer;
 `;
 
+const DotCircle = styled.div`
+   margin-top: 10px;
+   margin-right: 5px;
+  float: left;
+`;
+
 const ChevronRight = styled.div`
-  margin-top: 100px;
-  margin-left: 10px;
+  margin-top: 10px;
+  float: left;
   cursor: pointer;
 `;
 
@@ -93,6 +106,12 @@ const Loader = styled.div`
   left: 50%;
 `;
 
+const NavControls = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const ImageList = (props: IImageListProps) => {
   const { data, isError, isLoading } = props;
   const carouselRef = React.createRef<HTMLDivElement>();
@@ -103,7 +122,7 @@ export const ImageList = (props: IImageListProps) => {
     if (carouselDiv) {
       let far = +(carouselDiv.offsetWidth)/2*direction;
       let position = carouselDiv.scrollLeft + far;  
-      carouselDiv.scrollTo({left: position});
+      carouselDiv.scrollTo({left: position, behavior: "smooth"});
     }
   }
 
@@ -112,23 +131,31 @@ export const ImageList = (props: IImageListProps) => {
     !isError &&
     data &&
     data.length > 0 && (
-      <CarouselContainer>
-        <ChevronLeft onClick={() => scroll(-1)}><FontAwesomeIcon icon={chevronLeftDefinition} size="1x" /></ChevronLeft>
-        <CardsCarousel aria-label="popular-images" ref={carouselRef}>
-          {data.map((item: ICardProps) => (
-            <Card key={Guid.create().toString()}>
-              <CardImage src={item.img} />
-              <CardTitle>{item.title}</CardTitle>
-              <CardText>
-                <FontAwesomeIcon icon={imagesIconDefinition} size="1x" />
-                &nbsp;
-                {item.location}
-              </CardText>
-            </Card>
-          ))}
-        </CardsCarousel>
-        <ChevronRight onClick={() => scroll(1)}><FontAwesomeIcon icon={chevronRightDefinition} size="1x" /></ChevronRight>
-      </CarouselContainer>
+      <div>
+        <CarouselContainer>
+            <CardsCarousel aria-label="popular-images" ref={carouselRef}>
+              {data.map((item: ICardProps) => (
+                <FadeIn key={Guid.create().toString()}>
+                      <Card>
+                      <CardImage src={item.img} />
+                      <CardTitle>{item.title}</CardTitle>
+                      <CardText>
+                        <FontAwesomeIcon icon={imagesIconDefinition} size="1x" />
+                        &nbsp;
+                        {item.location}
+                      </CardText>
+                      <p>&nbsp;</p>
+                    </Card>
+                </FadeIn>
+              ))}
+            </CardsCarousel>
+        </CarouselContainer>
+        <NavControls>
+            <ChevronLeft onClick={() => scroll(-1)}><FontAwesomeIcon icon={chevronLeftDefinition} size="1x" /></ChevronLeft>
+            <DotCircle><FontAwesomeIcon icon={dotDefinition} size="1x" /></DotCircle>
+            <ChevronRight onClick={() => scroll(1)}><FontAwesomeIcon icon={chevronRightDefinition} size="1x" /></ChevronRight>
+        </NavControls>
+      </div>
     );
 
   return (

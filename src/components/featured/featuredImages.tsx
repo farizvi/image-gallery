@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarker } from "@fortawesome/free-solid-svg-icons";
+import FadeIn from 'react-fade-in';
 import { Guid } from "guid-typescript";
 import { ICardProps } from "../../app/models/ICardProps";
 import useFetch from "../../app/hooks/useFetch";
@@ -73,15 +74,18 @@ export const FeaturedImages = () => {
     response.data.length > 0 && (
       <CardsList>
         {response.data.map((item: ICardProps) => (
-          <Card key={Guid.create().toString()}>
-            <CardImage src={item.img} />
-            <CardTitle>{item.title}</CardTitle>
-            <CardText>
-              <FontAwesomeIcon icon={imagesIconDefinition} size="1x" />
-              &nbsp;
-              {item.location}
-            </CardText>
-          </Card>
+          <FadeIn key={Guid.create().toString()}>
+            <Card>
+              <CardImage src={item.img} />
+              <CardTitle>{item.title}</CardTitle>
+              <CardText>
+                <FontAwesomeIcon icon={imagesIconDefinition} size="1x" />
+                &nbsp;
+                {item.location}
+              </CardText>
+              <p>&nbsp;</p>
+            </Card>
+          </FadeIn>
         ))}
       </CardsList>
     );
