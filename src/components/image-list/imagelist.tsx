@@ -12,6 +12,7 @@ import { Guid } from "guid-typescript";
 import { ICardProps } from "../../app/models/ICardProps";
 import { IImageListProps } from "../../app/models/IImageListProps";
 import FadeIn from "react-fade-in";
+import { Loader } from "../loader/loader";
 
 library.add(faMapMarker);
 library.add(faChevronLeft);
@@ -100,11 +101,11 @@ const CardText = styled.p`
   margin-left: 15px;
 `;
 
-const Loader = styled.div`
-  margin: 0 auto;
-  position: fixed;
-  left: 50%;
-`;
+// const Loader = styled.div`
+//   margin: 0 auto;
+//   position: fixed;
+//   left: 50%;
+// `;
 
 const NavControls = styled.div`
   display: flex;
@@ -162,7 +163,7 @@ export const ImageList = (props: IImageListProps) => {
     <Fragment>
       {isError && <div>Something went wrong ...</div>}
       {isLoading ? (
-        <Loader>Loading...</Loader>
+        <Loader />
       ) : (
         <div>{renderCardsCarousel()}</div>
       )}

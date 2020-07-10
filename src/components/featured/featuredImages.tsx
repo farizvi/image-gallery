@@ -12,6 +12,7 @@ import FadeIn from 'react-fade-in';
 import { Guid } from "guid-typescript";
 import { ICardProps } from "../../app/models/ICardProps";
 import useFetch from "../../app/hooks/useFetch";
+import { Loader } from "../loader/loader";
 
 library.add(faMapMarker);
 const imagesLookup: IconLookup = { prefix: "fas", iconName: "map-marker" };
@@ -52,12 +53,6 @@ const CardText = styled.p`
   margin-left: 15px;
 `;
 
-const Loader = styled.div`
-  margin: 0 auto;
-  position: fixed;
-  left: 50%;
-`;
-
 export const FeaturedImages = () => {
   const imageListUrl = "https://demo3136867.mockable.io/featured";
   const [doSearch, setDoSearch] = useState(false);
@@ -93,7 +88,7 @@ export const FeaturedImages = () => {
   return (
     <Fragment>
       {isError && <div>Something went wrong ...</div>}
-      {isLoading ? <Loader>Loading...</Loader> : <div>{renderCardsList()}</div>}
+      {isLoading ? <Loader /> : <div>{renderCardsList()}</div>}
     </Fragment>
   );
 };
