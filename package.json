@@ -16,7 +16,7 @@
     "@types/react-dom": "^16.9.5",
     "@types/react-fade-in": "^0.1.0",
     "@types/styled-components": "^5.0.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "font-awesome": "^4.7.0",
     "guid-typescript": "^1.0.9",
     "react": "^16.13.0",
