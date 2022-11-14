@@ -23,7 +23,7 @@
     "react-content-loader": "^5.1.0",
     "react-dom": "^16.13.0",
     "react-fade-in": "^1.1.0",
-    "react-scripts": "3.4.0",
+    "react-scripts": "5.0.1",
     "styled-components": "^5.0.1",
     "typescript": "~3.7.2"
   },
